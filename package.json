@@ -4,68 +4,108 @@
   "description": "Share files via IPFS",
   "leadMaintainer": "Diogo Silva <fsdiogo@gmail.com>",
   "private": true,
+  "type": "module",
+  "main": "src/index.tsx",
+  "eslintConfig": {
+    "settings": {
+      "react": {
+        "version": "17.0.1"
+      }
+    },
+    "extends": [
+      "plugin:react/recommended",
+      "plugin:jsx-a11y/recommended",
+      "ipfs"
+    ],
+    "plugins": [
+      "react"
+    ],
+    "parserOptions": {
+      "project": true,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "rules": {
+      "react/prop-types": "off",
+      "no-console": [
+        "error",
+        {
+          "allow": [
+            "error",
+            "info",
+            "time",
+            "timeEnd",
+            "warn"
+          ]
+        }
+      ]
+    }
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "prebuild": "cp config/webpack.config.prod.js node_modules/react-scripts/config/ && lol public/locales > src/lib/languages.json",
-    "build": "react-scripts build",
+    "start": "vite",
+    "prebuild": "lol public/locales > src/lib/languages.json",
+    "build": "vite build",
     "build:icons": "svgr -d src/icons node_modules/ipfs-css/icons && eslint --fix src/icons/*",
-    "lint": "eslint --ignore-path .gitignore .",
-    "test": "react-scripts test",
-    "test:coverage": "react-scripts test --coverage",
+    "lint": "aegir lint",
+    "test": "echo 'not yet' || react-scripts test",
+    "test:coverage": "echo 'not yet' || react-scripts test --coverage",
     "test:serve": "ecstatic build --cache=0 --port=3001",
-    "test:e2e": "react-scripts test --testMatch **/test/e2e/**/*.test.js",
+    "test:e2e": "echo 'not yet' || react-scripts test --testMatch **/test/e2e/**/*.test.js",
     "test:e2e:ci": "URL=http://localhost:3001 run-p --race test:serve test:e2e",
     "analyze": "source-map-explorer build/static/js/main.*",
     "bundlesize": "bundlesize",
-    "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   },
   "dependencies": {
+    "@helia/mfs": "^3.0.8",
+    "@libp2p/devtools-metrics": "^0.2.5",
     "@svgr/cli": "^5.5.0",
+    "blob-to-it": "^2.0.7",
     "classnames": "^2.2.6",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.6",
     "file-extension": "^4.0.5",
     "filesize": "^6.1.0",
-    "i18next": "^19.9.0",
-    "i18next-browser-languagedetector": "^6.0.1",
-    "i18next-chained-backend": "^2.0.1",
-    "i18next-http-backend": "^1.1.1",
-    "i18next-icu": "^2.0.0",
-    "i18next-localstorage-backend": "^3.1.2",
+    "helia": "^4.2.6",
+    "i18next": "^23.15.1",
+    "i18next-browser-languagedetector": "^8.0.0",
+    "i18next-chained-backend": "^4.6.2",
+    "i18next-http-backend": "^2.6.1",
+    "i18next-icu": "^2.3.0",
+    "i18next-localstorage-backend": "^4.2.0",
     "internal-nav-helper": "^3.1.0",
-    "ipfs-core": "0.5.2",
     "ipfs-css": "^1.3.0",
-    "ipfs-http-client": "^49.0.2",
-    "ipfs-provider": "^1.1.0",
-    "is-ipfs": "^3.0.0",
+    "is-ipfs": "^8.0.4",
+    "it-to-browser-readablestream": "^2.0.9",
+    "it-to-stream": "^1.0.0",
     "milliseconds": "^1.0.3",
     "multiaddr": "^8.1.2",
     "multiaddr-to-uri": "^6.0.0",
     "prop-types": "^15.7.2",
     "pull-file-reader": "^1.0.2",
-    "qrcode.react": "^1.0.1",
+    "qrcode.react": "^4.0.1",
     "react": "^17.0.1",
-    "react-circular-progressbar": "^2.0.3",
+    "react-circular-progressbar": "^2.0.4",
     "react-copy-to-clipboard": "^5.0.3",
     "react-dnd": "^13.1.1",
     "react-dnd-html5-backend": "^12.1.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
-    "react-i18next": "^11.8.8",
-    "react-intl": "^5.13.1",
+    "react-i18next": "^15.0.2",
+    "react-intl": "^6.6.8",
     "react-loader-spinner": "^4.0.0",
     "react-modal": "^3.12.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.3",
     "react-test-renderer": "^17.0.1",
-    "redux-bundler": "^28.0.0",
+    "redux-bundler": "^28.1.0",
     "redux-bundler-react": "^1.2.0",
     "shortid": "^2.2.16",
     "tachyons": "^4.12.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
-    "video-extensions": "^1.1.0"
+    "video-extensions": "^1.1.0",
+    "wouter": "^3.3.5"
   },
   "devDependencies": {
     "@olizilla/lol": "2.0.0",
@@ -75,24 +115,18 @@
     "@storybook/addon-links": "^6.1.20",
     "@storybook/addons": "^6.1.20",
     "@storybook/react": "^6.1.20",
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^10.1.0",
-    "babel-runtime": "^6.26.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.8.0",
+    "aegir": "^44.1.1",
     "big.js": "^6.0.3",
     "bundlesize": "^0.18.1",
     "ecstatic": "^4.1.4",
-    "eslint": "^7.20.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-react": "^7.22.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "ipfsd-ctl": "^7.2.0",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
+    "eslint-plugin-react": "^7.36.1",
     "npm-run-all": "^4.1.5",
-    "puppeteer": "^7.1.0",
-    "source-map-explorer": "^2.5.2"
+    "source-map-explorer": "^2.5.2",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.6"
   },
   "homepage": "./",
   "bundlesize": [

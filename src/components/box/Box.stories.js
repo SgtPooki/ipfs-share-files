@@ -1,11 +1,10 @@
-import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { checkA11y } from '@storybook/addon-a11y'
-import i18n from '../../i18n-decorator'
+import { storiesOf } from '@storybook/react'
+import React from 'react'
 import { Provider } from 'redux-bundler-react'
 import getStore from '../../bundles'
+import i18n from '../../i18n-decorator'
 import { BoxAdd, BoxDownload, BoxNotAvailable } from './Box'
-import fixtures from './fixtures/root.json'
 
 const wrapperClass = 'flex flex-auto pa3 bg-navy sans-serif'
 
@@ -19,12 +18,12 @@ storiesOf('Box', module)
   ))
   .add('Add', () => (
     <div className={wrapperClass}>
-      <BoxAdd files={fixtures.files} shareLink={fixtures.shareLink} />
+      <BoxAdd />
     </div>
   ))
   .add('Download', () => (
     <div className={wrapperClass}>
-      <BoxDownload files={fixtures.files} isDownload />
+      <BoxDownload isDownload />
     </div>
   ))
   .add('Not Available', () => (
